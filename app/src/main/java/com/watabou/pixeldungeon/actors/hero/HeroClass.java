@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.items.potions.PotionOfFrost;
 import com.watabou.pixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
+import com.watabou.pixeldungeon.items.rings.RingOfHerbalism;
 import com.watabou.pixeldungeon.items.rings.RingOfShadows;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -83,10 +84,10 @@ public enum HeroClass {
 	};
 
 	public static final String[] ALC_PERKS = {
-			"Alchemists start with a brewing kit, which can be used to create potions.",
-			"Alchemists can apply potions to weapons to give them temporary effects.",
-			"Drinking potions can restore a small amount of hunger.",
-			"Potions of Liquid Flame, Toxic Gas and Frost are identified from the beginning.",
+		"Alchemists start with a Ring of Herbalism+1.",
+		"Alchemists can apply potions to weapons to give them temporary effects.",
+		"Drinking potions can restore a small amount of hunger.",
+		"Potions of Liquid Flame, Toxic Gas and Frost are identified from the beginning.",
 	};
 	
 	public void initHero( Hero hero ) {
@@ -195,6 +196,7 @@ public enum HeroClass {
 	private static void initAlchemist( Hero hero ) {
 
 		(hero.belongings.weapon = new Dagger()).identify();
+		(hero.belongings.ring1 = new RingOfHerbalism()).upgrade().identify();
 
 		new PotionOfLiquidFlame().setKnown();
 		new PotionOfFrost().setKnown();
