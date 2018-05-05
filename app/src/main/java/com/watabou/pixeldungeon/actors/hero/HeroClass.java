@@ -23,7 +23,10 @@ import com.watabou.pixeldungeon.items.TomeOfMastery;
 import com.watabou.pixeldungeon.items.armor.ClothArmor;
 import com.watabou.pixeldungeon.items.bags.Keyring;
 import com.watabou.pixeldungeon.items.food.Food;
+import com.watabou.pixeldungeon.items.potions.PotionOfFrost;
+import com.watabou.pixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
+import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
 import com.watabou.pixeldungeon.items.rings.RingOfShadows;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfIdentify;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfMagicMapping;
@@ -38,7 +41,7 @@ import com.watabou.utils.Bundle;
 
 public enum HeroClass {
 
-	WARRIOR( "warrior" ), MAGE( "mage" ), ROGUE( "rogue" ), HUNTRESS( "huntress" );
+	WARRIOR( "warrior" ), MAGE( "mage" ), ROGUE( "rogue" ), HUNTRESS( "huntress" ), ALCHEMIST( "alchemist" );
 	
 	private String title;
 	
@@ -78,6 +81,13 @@ public enum HeroClass {
 		"Huntresses gain more health from dewdrops.",
 		"Huntresses sense neighbouring monsters even if they are hidden behind obstacles."
 	};
+
+	public static final String[] ALC_PERKS = {
+			"Alchemists start with a brewing kit, which can be used to create potions.",
+			"Alchemists can apply potions to weapons to give them temporary effects.",
+			"Drinking potions can restore a small amount of hunger.",
+			"Potions of Liquid Flame, Toxic Gas and Frost are identified from the beginning.",
+	};
 	
 	public void initHero( Hero hero ) {
 		
@@ -89,7 +99,7 @@ public enum HeroClass {
 		case WARRIOR:
 			initWarrior( hero );
 			break;
-			
+
 		case MAGE:
 			initMage( hero );
 			break;
@@ -100,6 +110,10 @@ public enum HeroClass {
 			
 		case HUNTRESS:
 			initHuntress( hero );
+			break;
+
+		case ALCHEMIST:
+			initAlchemist( hero );
 			break;
 		}
 		
@@ -126,6 +140,9 @@ public enum HeroClass {
 			return Badges.Badge.MASTERY_ROGUE;
 		case HUNTRESS:
 			return Badges.Badge.MASTERY_HUNTRESS;
+		case ALCHEMIST:
+			// TODO: Add proper mastery badge
+			return Badges.Badge.MASTERY_WARRIOR;
 		}
 		return null;
 	}
@@ -174,6 +191,15 @@ public enum HeroClass {
 		
 		QuickSlot.primaryValue = boomerang;
 	}
+
+	private static void initAlchemist( Hero hero ) {
+
+		(hero.belongings.weapon = new Dagger()).identify();
+
+		new PotionOfLiquidFlame().setKnown();
+		new PotionOfFrost().setKnown();
+		new PotionOfToxicGas().setKnown();
+	}
 	
 	public String title() {
 		return title;
@@ -190,6 +216,9 @@ public enum HeroClass {
 			return Assets.ROGUE;
 		case HUNTRESS:
 			return Assets.HUNTRESS;
+		case ALCHEMIST:
+			// TODO: Add proper alchemist assets
+			return Assets.WARRIOR;
 		}
 		
 		return null;
@@ -206,6 +235,8 @@ public enum HeroClass {
 			return ROG_PERKS;
 		case HUNTRESS:
 			return HUN_PERKS;
+		case ALCHEMIST:
+			return ALC_PERKS;
 		}
 		
 		return null;
