@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
+import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.Splash;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.ItemStatusHandler;
@@ -36,20 +37,23 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.windows.WndBag;
 import com.watabou.pixeldungeon.windows.WndOptions;
 import com.watabou.utils.Bundle;
 
 public class Potion extends Item {
-	
+
+	public static final String AC_APPLY = "APPLY";
 	public static final String AC_DRINK	= "DRINK";
-	
-	private static final String TXT_HARMFUL		= "Harmful potion!";
-	private static final String TXT_BENEFICIAL	= "Beneficial potion";
-	private static final String TXT_YES			= "Yes, I know what I'm doing";
-	private static final String TXT_NO			= "No, I changed my mind";
-	private static final String TXT_R_U_SURE_DRINK = 
+
+	private static final String TXT_SELECT_WEAPON	= "Select a weapon to balance";
+	private static final String TXT_HARMFUL			= "Harmful potion!";
+	private static final String TXT_BENEFICIAL		= "Beneficial potion";
+	private static final String TXT_YES				= "Yes, I know what I'm doing";
+	private static final String TXT_NO				= "No, I changed my mind";
+	private static final String TXT_R_U_SURE_DRINK =
 		"Are you sure you want to drink it? In most cases you should throw such potions at your enemies.";
-	private static final String TXT_R_U_SURE_THROW = 
+	private static final String TXT_R_U_SURE_THROW =
 		"Are you sure you want to throw it? In most cases it makes sense to drink it.";
 	
 	private static final float TIME_TO_DRINK = 1f;
@@ -93,6 +97,24 @@ public class Potion extends Item {
 		stackable = true;		
 		defaultAction = AC_DRINK;
 	}
+
+	private final WndBag.Listener itemSelector = new WndBag.Listener() {
+		@Override
+		public void onSelect( Item item ) {
+			if (item != null) {
+
+				((Potion)curItem).onItemSelected( item );
+
+			} else {
+
+				curItem.collect( curUser.belongings.backpack );
+			}
+		}
+	};
+
+	protected void onItemSelected( Item item ) {
+
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static void initColors() {
@@ -118,6 +140,9 @@ public class Potion extends Item {
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
 		actions.add( AC_DRINK );
+		if ( hero.subClass == HeroSubClass.POISONER ) {
+			actions.add( AC_APPLY );
+		}
 		return actions;
 	}
 	
@@ -155,6 +180,12 @@ public class Potion extends Item {
 
 				}
 			
+		} else if (action.equals( AC_APPLY )) {
+
+			curUser = hero;
+			curItem = detach( hero.belongings.backpack );
+			GameScene.selectItem( itemSelector, WndBag.Mode.WEAPON, TXT_SELECT_WEAPON);
+
 		} else {
 			
 			super.execute( hero, action );

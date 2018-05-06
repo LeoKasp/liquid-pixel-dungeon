@@ -83,6 +83,9 @@ public class TomeOfMastery extends Item {
 			case HUNTRESS:
 				read( hero, HeroSubClass.SNIPER, HeroSubClass.WARDEN );
 				break;
+			case ALCHEMIST:
+				read( hero, HeroSubClass.POISONER, HeroSubClass.TRANSMUTER);
+				break;
 			}
 			
 		} else {			

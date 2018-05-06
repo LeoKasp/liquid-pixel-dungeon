@@ -85,7 +85,6 @@ public enum HeroClass {
 
 	public static final String[] ALC_PERKS = {
 		"Alchemists start with a Ring of Herbalism+1.",
-		"Alchemists can apply potions to weapons to give them temporary effects.",
 		"Drinking potions can restore a small amount of hunger.",
 		"Potions of Liquid Flame, Toxic Gas and Frost are identified from the beginning.",
 	};
@@ -197,6 +196,10 @@ public enum HeroClass {
 
 		(hero.belongings.weapon = new Dagger()).identify();
 		(hero.belongings.ring1 = new RingOfHerbalism()).upgrade().identify();
+
+		// TODO: remove these experimental things
+		new TomeOfMastery().collect();
+		new PotionOfLiquidFlame().collect();
 
 		new PotionOfLiquidFlame().setKnown();
 		new PotionOfFrost().setKnown();

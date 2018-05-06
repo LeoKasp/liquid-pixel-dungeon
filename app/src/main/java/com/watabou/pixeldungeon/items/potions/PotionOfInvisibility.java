@@ -24,6 +24,9 @@ import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Horror;
 import com.watabou.pixeldungeon.utils.GLog;
 
 public class PotionOfInvisibility extends Potion {
@@ -61,5 +64,10 @@ public class PotionOfInvisibility extends Potion {
 		} else {
 			ch.sprite.alpha( ALPHA );
 		}
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new Horror() );
 	}
 }

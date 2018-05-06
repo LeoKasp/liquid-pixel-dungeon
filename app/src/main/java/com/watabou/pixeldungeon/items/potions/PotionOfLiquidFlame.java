@@ -22,6 +22,8 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.scenes.GameScene;
 
 public class PotionOfLiquidFlame extends Potion {
@@ -53,5 +55,10 @@ public class PotionOfLiquidFlame extends Potion {
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new com.watabou.pixeldungeon.items.weapon.enchantments.Fire() );
 	}
 }

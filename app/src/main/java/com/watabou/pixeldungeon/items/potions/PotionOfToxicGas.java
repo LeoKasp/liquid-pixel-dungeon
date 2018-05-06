@@ -22,6 +22,9 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Poison;
 import com.watabou.pixeldungeon.scenes.GameScene;
 
 public class PotionOfToxicGas extends Potion {
@@ -54,5 +57,10 @@ public class PotionOfToxicGas extends Potion {
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new Poison() );
 	}
 }

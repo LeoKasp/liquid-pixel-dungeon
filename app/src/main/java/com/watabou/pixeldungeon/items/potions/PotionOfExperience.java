@@ -18,6 +18,9 @@
 package com.watabou.pixeldungeon.items.potions;
 
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Instability;
 
 public class PotionOfExperience extends Potion {
 
@@ -41,5 +44,10 @@ public class PotionOfExperience extends Potion {
 	@Override
 	public int price() {
 		return isKnown() ? 80 * quantity : super.price();
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new Instability() );
 	}
 }

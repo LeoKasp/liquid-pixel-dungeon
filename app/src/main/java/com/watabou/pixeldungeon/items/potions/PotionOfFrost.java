@@ -22,6 +22,9 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.actors.blobs.Freezing;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Slow;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.utils.PathFinder;
@@ -66,5 +69,10 @@ public class PotionOfFrost extends Potion {
 	@Override
 	public int price() {
 		return isKnown() ? 50 * quantity : super.price();
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new Slow() );
 	}
 }

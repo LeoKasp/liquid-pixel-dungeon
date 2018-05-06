@@ -35,6 +35,7 @@ import com.watabou.utils.Random;
 abstract public class Weapon extends KindOfWeapon {
 
 	private static final int HITS_TO_KNOW	= 20;
+	private static final int MAX_POISON_STACKS  = 5;
 	
 	private static final String TXT_IDENTIFY		= 
 		"You are now familiar enough with your %s to identify it. It is %s.";
@@ -43,6 +44,8 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	private static final String TXT_TO_STRING	= "%s :%d";
 	private static final String TXT_BROKEN		= "broken %s :%d";
+
+	private int poisonStacks = 0;
 	
 	public int		STR	= 10;
 	public float	ACU	= 1;
@@ -143,6 +146,13 @@ abstract public class Weapon extends KindOfWeapon {
 				damage += Random.IntRange( 0, exStr );
 			}
 		}
+
+		if (poisonStacks > 0) {
+			poisonStacks--;
+			if(poisonStacks == 0) {
+				enchantment = null;
+			}
+		}
 		
 		return damage;
 	}
@@ -195,6 +205,11 @@ abstract public class Weapon extends KindOfWeapon {
 			}
 		}
 		return this;
+	}
+
+	public Weapon potionEnchant( Enchantment ench ) {
+		poisonStacks = MAX_POISON_STACKS;
+		return enchant(ench);
 	}
 	
 	public Weapon enchant( Enchantment ench ) {

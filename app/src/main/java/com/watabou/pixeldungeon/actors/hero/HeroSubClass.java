@@ -48,7 +48,12 @@ public enum HeroSubClass {
 		"effectively ignoring it when using a missile weapon." ),
 	WARDEN( "warden", 
 		"Having a strong connection with forces of nature gives _Wardens_ an ability to gather dewdrops and " +
-		"seeds from plants. Also trampling a high grass grants them a temporary armor buff." );
+		"seeds from plants. Also trampling a high grass grants them a temporary armor buff." ),
+
+	POISONER("poisoner",
+		"The _Poisoner_ can apply potions to his weapons to give them temporary additional effects."),
+	TRANSMUTER("transmuter",
+		"The _Transmuter_ can transmute potions into pure gold.");
 	
 	private String title;
 	private String desc;

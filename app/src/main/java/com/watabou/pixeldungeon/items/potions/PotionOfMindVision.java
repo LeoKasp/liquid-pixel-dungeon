@@ -21,6 +21,9 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.MindVision;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.weapon.Weapon;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Horror;
 import com.watabou.pixeldungeon.utils.GLog;
 
 public class PotionOfMindVision extends Potion {
@@ -53,5 +56,10 @@ public class PotionOfMindVision extends Potion {
 	@Override
 	public int price() {
 		return isKnown() ? 35 * quantity : super.price();
+	}
+
+	@Override
+	protected void onItemSelected( Item item ) {
+		((Weapon)item).potionEnchant( new Horror() );
 	}
 }
