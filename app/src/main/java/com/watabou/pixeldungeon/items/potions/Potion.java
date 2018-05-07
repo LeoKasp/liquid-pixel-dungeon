@@ -29,6 +29,7 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.Splash;
+import com.watabou.pixeldungeon.items.Gold;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.ItemStatusHandler;
 import com.watabou.pixeldungeon.levels.Level;
@@ -45,6 +46,7 @@ public class Potion extends Item {
 
 	public static final String AC_APPLY = "APPLY";
 	public static final String AC_DRINK	= "DRINK";
+	public static final String AC_TRANSMUTE = "TRANSMUTE";
 
 	private static final String TXT_SELECT_WEAPON	= "Select a weapon to balance";
 	private static final String TXT_HARMFUL			= "Harmful potion!";
@@ -142,6 +144,8 @@ public class Potion extends Item {
 		actions.add( AC_DRINK );
 		if ( hero.subClass == HeroSubClass.POISONER ) {
 			actions.add( AC_APPLY );
+		} else if ( hero.subClass == HeroSubClass.TRANSMUTER ) {
+			actions.add( AC_TRANSMUTE );
 		}
 		return actions;
 	}
@@ -185,6 +189,12 @@ public class Potion extends Item {
 			curUser = hero;
 			curItem = detach( hero.belongings.backpack );
 			GameScene.selectItem( itemSelector, WndBag.Mode.WEAPON, TXT_SELECT_WEAPON);
+
+		} else if (action.equals( AC_TRANSMUTE )) {
+
+			detach( hero.belongings.backpack );
+			int value = (int) Math.floor(price() * 1.5);
+			new Gold( value ).doPickUp( hero );
 
 		} else {
 			
