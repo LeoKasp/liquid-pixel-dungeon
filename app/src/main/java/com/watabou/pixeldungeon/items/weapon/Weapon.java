@@ -35,6 +35,7 @@ import com.watabou.utils.Random;
 abstract public class Weapon extends KindOfWeapon {
 
 	private static final int HITS_TO_KNOW	= 20;
+	// TODO: Balance poison stacks
 	private static final int MAX_POISON_STACKS  = 5;
 	
 	private static final String TXT_IDENTIFY		= 
@@ -59,6 +60,7 @@ abstract public class Weapon extends KindOfWeapon {
 	private int hitsToKnow = HITS_TO_KNOW;
 	
 	protected Enchantment enchantment;
+	protected Enchantment permanentEnchantment;
 	
 	@Override
 	public void proc( Char attacker, Char defender, int damage ) {
@@ -150,7 +152,8 @@ abstract public class Weapon extends KindOfWeapon {
 		if (poisonStacks > 0) {
 			poisonStacks--;
 			if(poisonStacks == 0) {
-				enchantment = null;
+				enchantment = permanentEnchantment;
+				permanentEnchantment = null;
 			}
 		}
 		
@@ -209,6 +212,9 @@ abstract public class Weapon extends KindOfWeapon {
 
 	public Weapon potionEnchant( Enchantment ench ) {
 		poisonStacks = MAX_POISON_STACKS;
+		if ( enchantment != null && permanentEnchantment == null ) {
+			permanentEnchantment = enchantment;
+		}
 		return enchant(ench);
 	}
 	

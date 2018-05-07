@@ -193,6 +193,7 @@ public class Potion extends Item {
 		} else if (action.equals( AC_TRANSMUTE )) {
 
 			detach( hero.belongings.backpack );
+			// TODO: Balance transmutation value
 			int value = (int) Math.floor(price() * 1.5);
 			new Gold( value ).doPickUp( hero );
 
